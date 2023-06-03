@@ -8,7 +8,9 @@ export interface IUser extends Document {
     email: string;
     password: string;
     isProvider: boolean;    
-    touristicDestinations: ObjectId[];
+    touristicDestinations: ObjectId[] ;
+    profile: ObjectId | null;
+    comparePassword: ()=>Promise<boolean>;
     createdAt: Date;
     updatedAt: Date;
 }
@@ -33,26 +35,24 @@ const userSchema = new Schema({
         min: 6,
     },
     isProvider:{
-        type: String,
+        type: Boolean,
         default: false,
         required: false,
     },
+    profile: { type : Schema.Types.ObjectId, ref: "Profile",default:null },
+    touristicDestinations: [{ type: Schema.Types.ObjectId, ref: "Destino" }],
    
 
 }, { timestamps: true });
 
-userSchema.pre<IUser>("save", function(next) {
+userSchema.pre<IUser>("save", async function(next) {
     const user = this;
     if (!user.isModified("password")) return next();
 
-    bcrypt.genSalt(10, (err, salt) => {
-        if (err) return next(err);
-        bcrypt.hash(user.password, salt, (error, hash) => {
-            if (error) return next(error);
-            user.password = hash;
-            next();
-        });
-    });
+   const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(user.password, salt);
+    user.password = hash;
+    next();
 });
 
 userSchema.methods.comparePassword = async function (password: string): Promise<boolean> {
