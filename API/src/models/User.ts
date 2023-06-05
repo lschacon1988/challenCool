@@ -11,7 +11,7 @@ export interface IUser extends Document {
     isProvider: boolean;    
     touristicDestinations: ObjectId[] ;
     profile: Document<IProfile> | null;
-    comparePassword: ()=>Promise<boolean>;
+    comparePassword: (arg0: string)=>Promise<boolean>;
     createdAt: Date;
     updatedAt: Date;
 }

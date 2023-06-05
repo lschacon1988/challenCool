@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import UsersManagerDB from "../utils/manager/Users.manger";
+import UsersManagerDB, { IUserManager } from "../utils/manager/Users.manger";
 import { messageError } from "../utils/error/messageError";
 
-const usersManagerDB: any = new UsersManagerDB();
+const usersManagerDB: IUserManager = new UsersManagerDB();
 
 
 export const getAllUsers = async (req: Request, res: Response) => {
