@@ -58,7 +58,7 @@ router.get('/destino/:idDestino', getDestinoById);
 /**
  * Create Destination
  * @swagger
- * /api/destinos/{idUser}:
+ * /api/destino/{idUser}:
  *   post:
  *     tags:
  *       - Destinos
@@ -67,7 +67,7 @@ router.get('/destino/:idDestino', getDestinoById);
  *     security:
  *       - bearerAuth: []
  *     parameters:
- *       - in: query
+ *       - in: path
  *         name: idUser
  *         schema:
  *           type: string
@@ -92,7 +92,7 @@ router.post('/destino/:idUser',passport.authenticate('jwt',{session:false, }), c
 /**
  * Update Destination
  * @swagger
- * /api/destinos/{idDestino}:
+ * /api/destino/{idDestino}:
  *   put:
  *     tags:
  *       - Destinos
@@ -126,7 +126,7 @@ router.put('/destino/:idDestino',passport.authenticate('jwt',{session:false}), u
 /**
  * Delete Destination
  * @swagger
- * /destinos/{idDestino}:
+ * /api/destino/{idDestino}:
  *   delete:
  *     tags:
  *       - Destinos

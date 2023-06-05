@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
-import UsersManager from "../utils/manager/Users.manger";
+import UsersManager, { IUserManager } from "../utils/manager/Users.manger";
 import { IUser } from "../models/User";
 import { messageError } from "../utils/error/messageError";
 
-const usersManager: any = new UsersManager();
+const usersManager: IUserManager = new UsersManager();
 
 export const signUp = async (req: Request, res: Response): Promise<Response> => {
    try {
