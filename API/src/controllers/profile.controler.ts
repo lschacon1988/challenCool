@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
-import ProfilesManager from "../utils/manager/Profiles.managerDB";
+import ProfilesManager, { IProfileManager } from "../utils/manager/Profiles.managerDB";
 import { messageError } from "../utils/error/messageError";
 
 
-const profilesManagerDB: any = new ProfilesManager();
+const profilesManagerDB: IProfileManager = new ProfilesManager();
 
 export const getAllProfiles = async (req: Request, res: Response) => {
     try {

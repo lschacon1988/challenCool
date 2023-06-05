@@ -1,15 +1,16 @@
 import Profile, { IProfile } from "../../models/Profile";
-import User from "../../models/User";
+import User, { IUser } from "../../models/User";
 
 
 
-interface IProfileManager {
+export interface IProfileManager {
    getAllProfiles(): Promise<IProfile[]>;
    getProfileById(idUser: string): Promise<IProfile>;
-   createProfile(idUser: string, profile: IProfile): Promise<IProfile>;
+   createProfile(idUser: string, profile: IProfile): Promise<IUser | null>;
    updateProfile(idUser: string, profile: IProfile): Promise<IProfile>;
+   deleteProfile(idProfile: string): Promise<Object>;
 }
-export default class ProfilesManager {
+export default class ProfilesManager implements IProfileManager {
    getAllProfiles = async (): Promise<IProfile[]> => {
       try {
          const profiles = await Profile.find().populate("user", [
@@ -37,13 +38,14 @@ export default class ProfilesManager {
       }
    };
 
-   createProfile = async (idUser: string, profile: IProfile) => {
+   createProfile = async (idUser: string, profile: IProfile): Promise<IUser | null> =>  {
       try {
          const user = await User.findById(idUser).populate("profile").exec();
 
          if (!user) {
             throw new Error("User not found");
          }
+         if(user.profile !== null) throw new Error("User already has a profile");
 
          const newProfile = new Profile(profile);
          newProfile.user = user._id;
