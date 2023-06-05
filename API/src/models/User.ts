@@ -33,6 +33,7 @@ const userSchema = new Schema({
         type: String,
         required: true,
         min: 6,
+        Selection: false,
     },
     isProvider:{
         type: Boolean,
