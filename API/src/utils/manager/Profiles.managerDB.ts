@@ -1,6 +1,8 @@
 import Profile, { IProfile } from "../../models/Profile";
 import User from "../../models/User";
 
+
+
 interface IProfileManager {
    getAllProfiles(): Promise<IProfile[]>;
    getProfileById(idUser: string): Promise<IProfile>;
@@ -37,7 +39,7 @@ export default class ProfilesManager {
 
    createProfile = async (idUser: string, profile: IProfile) => {
       try {
-         const user = await User.findById(idUser);
+         const user = await User.findById(idUser).populate("profile").exec();
 
          if (!user) {
             throw new Error("User not found");
@@ -48,9 +50,9 @@ export default class ProfilesManager {
 
          user.profile = newProfile._id;
          user.isProvider = true;
-         user.save();
+         await user.save();
 
-         return newProfile;
+         return await User.findById(idUser).populate("profile").exec();
       } catch (error) {
          throw error;
       }

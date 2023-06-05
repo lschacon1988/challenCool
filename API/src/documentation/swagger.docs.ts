@@ -18,8 +18,8 @@ const swaggerDefinition = {
          description: "Operations about users",
       },
       {
-         name: "Profile",
-         description: "Operations about profile",
+         name: "Authentication",
+         description: "Operations about authentication",
       },
       {
          name: "Destino",
@@ -64,27 +64,14 @@ const swaggerDefinition = {
                   type: "string",
                   required: false,
                   description: "User's touristicDestinations",
+                  example:['ObjectId', 'ObjectId', 'ObjectId']
                }],
                profile:{
                   type: "string",
                   required: false,
                   description: "User's profile",
-               },
-               createdAt:{
-                  type: "DateTime",
-                  required: false,
-                  description: "User's createdAt",
-                  format: "date-time",
-                  example: "2020-01-01T00:00:00.000Z",
-                  readOnly: true
-
-               },
-               updatedAt:{
-                  type: "DateTime",
-                  required: false,
-                  description: "User's updatedAt",
-                  format: "date-time",
-                  example: "2020-01-01T00:00:00.000Z",}
+               }
+              
 
             },
          },
@@ -120,21 +107,8 @@ const swaggerDefinition = {
                   type: "string",
                   required: true,
                   description: "Profile's tlf",
-               },
-               createdAt:{
-                  type: "DateTime",
-                  required: false,
-                  description: "Profile's createdAt",
-                  format: "date-time",
-                  example: "2020-01-01T00:00:00.000Z",
-               },
-               updatedAt:{
-                  type: "DateTime",
-                  required: false,
-                  description: "Profile's updatedAt",
-                  format: "date-time",
-                  example: "2020-01-01T00:00:00.000Z",
-               },
+               }
+               
 
             },
          },
@@ -162,21 +136,8 @@ const swaggerDefinition = {
                      required: true,
                      description: "Destino's image",
                   },
-               ],
-               createdAt:{
-                  type: "DateTime",
-                  required: false,
-                  description: "Destino's createdAt",
-                  format: "date-time",
-                  example: "2020-01-01T00:00:00.000Z",
-               },
-               updatedAt:{
-                  type: "DateTime",
-                  required: false,
-                  description: "Destino's updatedAt",
-                  format: "date-time",
-                  example: "2020-01-01T00:00:00.000Z",
-               },
+               ]
+               
             },
          },
       },
@@ -185,7 +146,7 @@ const swaggerDefinition = {
 
 const swaggerOptions = {
    definition: swaggerDefinition,
-   apis: ["./src/routes/*.ts"],
+   apis: ["./src/routers/*.ts"],
 };
 
 export default swaggerJSDoc(swaggerOptions);
