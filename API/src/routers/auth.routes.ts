@@ -72,7 +72,7 @@ router.post("/signIn", signIn);
 /**
  * Update User Credentials
  * @swagger
- * /update/{idUser}/credentials:
+ * /api/update/{idUser}/credentials:
  *   put:
  *     tags:
  *       - Authentication

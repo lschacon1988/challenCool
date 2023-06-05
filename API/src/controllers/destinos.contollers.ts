@@ -47,7 +47,7 @@ export const updateDestino = async (req: Request, res: Response) => {
 
 export const deleteDestino = async (req: Request, res: Response) => {
     try {
-        const destino = await destinosManagerDB.delete(req.params.idDestino);
+        const destino = await destinosManagerDB.delete(req.params.idUser, req.params.idDestino);
         res.status(200).json(destino);
     } catch (error) {
         return res.status(400).json({ msg: messageError(error) });

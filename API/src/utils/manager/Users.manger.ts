@@ -2,6 +2,7 @@ import User, { IUser } from "../../models/User";
 import jwt from "jsonwebtoken";
 import config from "../config/config";
 import Profile from "../../models/Profile";
+import { passwordHash } from "../passwordHash";
 
 
 export interface IUserManager{
@@ -60,7 +61,9 @@ export default class UsersManager implements IUserManager{
 
    async update(id: string, user: IUser): Promise<IUser | object> {
       try {
-         const userUpdated = await User.findByIdAndUpdate(id, user, {
+         let userPassword: IUser = user ;
+         userPassword.password = await passwordHash(userPassword.password);
+         const userUpdated = await User.findByIdAndUpdate(id, userPassword, {
             new: true,
          }).populate("profile").exec();
          if (!userUpdated) {

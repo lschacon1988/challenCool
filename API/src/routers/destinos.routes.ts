@@ -126,15 +126,21 @@ router.put('/destino/:idDestino',passport.authenticate('jwt',{session:false}), u
 /**
  * Delete Destination
  * @swagger
- * /api/destino/{idDestino}:
+ * /api/destino/{idUser}/delete/{idDestino}/:
  *   delete:
  *     tags:
  *       - Destinos
  *     summary: Delete Destination
  *     description: Delete an existing destination
  *     security:
- *       - jwt: []
+ *       - bearerAuth: []
  *     parameters:
+ *       - in: path
+ *         name: idUser
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: ID of the user
  *       - in: path
  *         name: idDestino
  *         schema:
@@ -150,6 +156,7 @@ router.put('/destino/:idDestino',passport.authenticate('jwt',{session:false}), u
  *         description: Unauthorized
  */
 
-router.delete('/destino/:idDestino',passport.authenticate('jwt',{session:false}), deleteDestino);
+
+router.delete('/destino/:idUser/delete/:idDestino/',passport.authenticate('jwt',{session:false}), deleteDestino);
 
 export default router;

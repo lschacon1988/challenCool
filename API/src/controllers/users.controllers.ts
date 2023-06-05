@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import UsersManagerDB, { IUserManager } from "../utils/manager/Users.manger";
 import { messageError } from "../utils/error/messageError";
+import { IProfile } from "../models/Profile";
 
 const usersManagerDB: IUserManager = new UsersManagerDB();
 
@@ -17,6 +18,7 @@ export const getAllUsers = async (req: Request, res: Response) => {
 export const getUserById = async (req: Request, res: Response) => {
     try {
         const user = await usersManagerDB.getById(req.params.idUser);
+       
         res.status(200).json(user);
     } catch (error) {
         return res.status(400).json({ msg: messageError(error) });

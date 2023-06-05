@@ -1,5 +1,6 @@
 import Destino, { IDestino } from "../../models/Destino";
 import User, { IUser } from "../../models/User";
+import { ObjectId } from "mongoose";
 
 export interface IDestinosManagerDB {
    getAllDestino(): Promise<IDestino[]>;
@@ -70,7 +71,7 @@ export default class DestinosManagerDB {
       }
    }
 
-   async delete(userId: string, id: string): Promise<IDestino | Object> {
+   async delete(userId: string, idDestino: string): Promise<IDestino | Object> {
       try {
          const userProvider: IUser | null = await User.findById(userId);
          if (!userProvider) {
@@ -78,8 +79,15 @@ export default class DestinosManagerDB {
          }
          if (!userProvider.isProvider) {
             throw new Error("User is not a provider completely you profile");
+
          }
-         const destinoDeleted = await Destino.findByIdAndDelete(id);
+         console.log(userProvider.touristicDestinations);
+         const idPrueba = idDestino as unknown as ObjectId;
+         const index = userProvider.touristicDestinations.indexOf(idPrueba);
+         userProvider.touristicDestinations.splice(index, 1);
+         userProvider.save();
+         console.log(userProvider.touristicDestinations);
+         const destinoDeleted = await Destino.findByIdAndDelete(idDestino);
          if (!destinoDeleted) {
             throw new Error("Dest not found");
          }

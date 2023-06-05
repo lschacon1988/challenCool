@@ -1,7 +1,8 @@
-import { Schema, model, Document } from "mongoose";
 import  bcrypt from "bcrypt";
+import { Schema, model, Document } from "mongoose";
 import { ObjectId } from "mongoose";
 import { IProfile } from "./Profile";
+import { passwordHash } from "../utils/passwordHash";
 
 
 export interface IUser extends Document {
@@ -50,10 +51,8 @@ const userSchema = new Schema({
 userSchema.pre<IUser>("save", async function(next) {
     const user = this;
     if (!user.isModified("password")) return next();
-
-   const salt = await bcrypt.genSalt(10);
-    const hash = await bcrypt.hash(user.password, salt);
-    user.password = hash;
+       
+    user.password = await passwordHash(user.password);
     next();
 });
 
