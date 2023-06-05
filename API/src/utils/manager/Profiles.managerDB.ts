@@ -46,7 +46,9 @@ export default class ProfilesManager {
          }
 
          const newProfile = new Profile(profile);
+         newProfile.user = user._id;
          await newProfile.save();
+         
 
          user.profile = newProfile._id;
          user.isProvider = true;
@@ -58,10 +60,10 @@ export default class ProfilesManager {
       }
    };
 
-   updateProfile = async (idPofile: string, profile: IProfile) => {
+   updateProfile = async (idUser: string, profile: IProfile) => {
       try {
          const profileDB = await Profile.findOneAndUpdate(
-            { _id: idPofile },
+            { user: idUser },
             profile,
             { new: true }
          );

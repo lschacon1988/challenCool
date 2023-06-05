@@ -1,10 +1,10 @@
 import { Response, Request } from "express";
 import DestinosManagerDB from "../utils/manager/Destinos.managerDB";
-import UsersManager from "../utils/manager/Users.manger";
+import UsersManager, { IUserManager } from "../utils/manager/Users.manger";
 import { messageError } from "../utils/error/messageError";
 
 const destinosManagerDB: any = new DestinosManagerDB();
-const usersManager: any = new UsersManager();
+const usersManager: IUserManager = new UsersManager();
 
 export const getAllDestinos = async (req: Request, res: Response) => {
     try {
@@ -26,6 +26,8 @@ export const getDestinoById = async (req: Request, res: Response) => {
 
 export const createDestino = async (req: Request, res: Response) => {
     try {
+        const user = await usersManager.getUserProvider(req.params.idUser);
+        if(!user) return res.status(401).json({ msg: 'El usuario no esta autorizado debes compeltar el proceso de registro'})
         
         const destino = await destinosManagerDB.create(req.params.idUser, req.body);
         res.status(201).json(destino);

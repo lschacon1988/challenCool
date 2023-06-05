@@ -38,43 +38,26 @@ const swaggerDefinition = {
          User: {
             type: "object",
             properties: {
-               username: {
-                  type: "string",
-                  required: true,
-                  description: "User's username",
-               },
-
-               password: {
-                  type: "string",
-                  required: true,
-                  description: "User's password",
-               },
-
-               email: {
-                  type: "string",
-                  required: true,
-                  description: "User's email",
-               },
-               isProvider: {
-                  type: "boolean",
-                  required: false,
-                  description: "User's isProvider",
-               },
-               touristicDestinations:[{
-                  type: "string",
-                  required: false,
-                  description: "User's touristicDestinations",
-                  example:['ObjectId', 'ObjectId', 'ObjectId']
-               }],
-               profile:{
-                  type: "string",
-                  required: false,
-                  description: "User's profile",
-               }
+              username: {
+                type: "string",
+                required: true,
+                description: "User's username",
+              },
+              password: {
+                type: "string",
+                required: true,
+                description: "User's password",
+              },
+              email: {
+                type: "string",
+                required: true,
+                description: "User's email",
+              },
+             
               
-
             },
-         },
+          },
+          
          Profile: {
             type: "object",
             properties: {
@@ -107,9 +90,8 @@ const swaggerDefinition = {
                   type: "string",
                   required: true,
                   description: "Profile's tlf",
-               }
+               },
                
-
             },
          },
          Destino: {
@@ -130,13 +112,16 @@ const swaggerDefinition = {
                   required: true,
                   description: "Destino's price",
                },
-               image: [
+               image: 
                   {
-                     type: "string",
+                     type: "array",
+                     items: {
+                        type: "string",
+                     },
                      required: true,
                      description: "Destino's image",
+                     example: ["URLS imagen", "URLS imagen", "URLS imagen"],
                   },
-               ]
                
             },
          },
@@ -150,4 +135,3 @@ const swaggerOptions = {
 };
 
 export default swaggerJSDoc(swaggerOptions);
-

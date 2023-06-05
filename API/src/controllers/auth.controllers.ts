@@ -15,6 +15,7 @@ export const signUp = async (req: Request, res: Response): Promise<Response> => 
    }
 };
 
+
 export const signIn = async (req: Request, res: Response) => {
    try {
       const user = await usersManager.validateUser(req.body.email);

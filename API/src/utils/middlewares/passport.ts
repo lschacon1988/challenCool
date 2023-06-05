@@ -1,8 +1,8 @@
 import { ExtractJwt, Strategy, StrategyOptions  } from "passport-jwt";
 import config from "../config/config";
-import UsersManager from "../manager/Users.manger";
+import UsersManager, { IUserManager } from "../manager/Users.manger";
 
-const usersManager: any = new UsersManager();
+const usersManager: IUserManager = new UsersManager();
 
 const options: StrategyOptions = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -12,7 +12,7 @@ const options: StrategyOptions = {
 export default new Strategy(options, async (payload, done) => {
 
     try {
-        const user = await usersManager.getUserProvider(payload.id);
+        const user = await usersManager.getById(payload.id);
         
         if (user) {
             return done(null, user);

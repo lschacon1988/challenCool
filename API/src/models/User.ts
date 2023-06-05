@@ -1,6 +1,7 @@
 import { Schema, model, Document } from "mongoose";
 import  bcrypt from "bcrypt";
 import { ObjectId } from "mongoose";
+import { IProfile } from "./Profile";
 
 
 export interface IUser extends Document {
@@ -9,7 +10,7 @@ export interface IUser extends Document {
     password: string;
     isProvider: boolean;    
     touristicDestinations: ObjectId[] ;
-    profile: ObjectId | null;
+    profile: Document<IProfile> | null;
     comparePassword: ()=>Promise<boolean>;
     createdAt: Date;
     updatedAt: Date;

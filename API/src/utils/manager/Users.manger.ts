@@ -1,9 +1,10 @@
 import User, { IUser } from "../../models/User";
 import jwt from "jsonwebtoken";
 import config from "../config/config";
-import mongoose from "mongoose";
+import Profile from "../../models/Profile";
 
-interface IUserManager{
+
+export interface IUserManager{
    getAll(): Promise<IUser[]>;
    getById(userId: string): Promise<IUser | null>
    create(user: IUser): Promise<IUser | object>;
@@ -31,6 +32,7 @@ export default class UsersManager implements IUserManager{
          throw err;
       }
    }
+
    getAll = async (): Promise<IUser[]> => {
       return await User.find()
          .populate("touristicDestinations")
@@ -60,19 +62,21 @@ export default class UsersManager implements IUserManager{
       try {
          const userUpdated = await User.findByIdAndUpdate(id, user, {
             new: true,
-         }).populate("touristicDestinations").populate("profile").exec();
+         }).populate("profile").exec();
          if (!userUpdated) {
             throw new Error("User not found");
          }
+         
          return userUpdated;
       } catch (err) {
          throw err;
       }
    }
 
-   async delete(id: string) {
+   async delete(idUser: string) {
       try {
-         const userDelete = await User.findByIdAndRemove(id);
+         const userDelete = await User.findByIdAndRemove(idUser);
+         await Profile.findOneAndRemove({user:idUser});
          if (userDelete) {
             return { msg: "User deleted" };
          }

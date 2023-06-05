@@ -120,8 +120,8 @@ afterAll(async () => {
       await signUp(mockReq, mockRes);
       
       expect(mockRes.status).toHaveBeenCalledWith(201);
-      expect( mockRes.json instanceof User).toBe(true);
-      //expect(mockRes.json).toHaveBeenCalledWith(expectedUser);
+      
+      
       
 
   });

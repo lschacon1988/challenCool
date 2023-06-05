@@ -7,6 +7,7 @@ export interface IProfile extends Document {
    coutry: string;
    city: string;
    tlf: string;
+   user: ObjectId;
   
 }
 
@@ -17,6 +18,7 @@ const profileSchema = new Schema({
    coutry: { type: String, required: true },
    city: { type: String, required: true },
    tlf: { type: String, required: true },
+   user: { type: Schema.Types.ObjectId, ref: "User" },
    
 });
 

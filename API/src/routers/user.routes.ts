@@ -1,4 +1,4 @@
-import { createProfile } from "../controllers/profile.controler";
+import { createProfile, updateProfile } from "../controllers/profile.controler";
 import {
    deleteUser,
    getAllUsers,
@@ -6,6 +6,7 @@ import {
    updateUser,
 } from "../controllers/users.controllers";
 import { Router } from "express";
+import passport from "passport";
 
 const router = Router();
 
@@ -70,29 +71,76 @@ router.get("/user/:idUser", getUserById);
  *         application/json:
  *           schema:
  *             $ref: '#/components/schemas/Profile'
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       201:
  *         description: Created and user profile completed
  *       400:
  *         description: Bad request
+ *       401:
+ *          description: Unauthorized
  */
-router.post("/user/:idUser/profile", createProfile);
+
+router.post("/user/:idUser/profile",passport.authenticate('jwt',{session:false }) , createProfile);
 /**
- * Update Profile
+ * Update User
  * @swagger
- * /api/user/{idUser}
- * update:
- * tags:
- * - Users
- * summary: Update Profile
- * description: Update
- * parameters:
- * - in: path
- * name: idUser
- * schema:
- * 
+ * /api/user/{idUser}/profile:
+ *   put:
+ *     tags:
+ *       - Users
+ *     summary: Update User
+ *     description: Update user and profile by providing user ID
+ *     parameters:
+ *       - in: path
+ *         name: idUser
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: ID of the user
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Profile'
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: User updated successfully
+ *       400:
+ *         description: Bad request
+ *       401:
+ *         description: Unauthorized
  */
-router.put("/user/:idUser", updateUser);
-router.delete("/user/:idUser", deleteUser);
+
+router.put("/user/:idUser/profile",passport.authenticate('jwt',{session:false }), updateProfile);
+/**
+ * Delete User
+ * @swagger
+ * /api/user/{idUser}:
+ *   delete:
+ *     tags:
+ *       - Users
+ *     summary: Delete User
+ *     description: Delete a user by providing user ID
+ *     parameters:
+ *       - in: path
+ *         name: idUser
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: ID of the user
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       204:
+ *         description: User deleted successfully
+ *       400:
+ *         description: Bad request
+ */
+
+router.delete("/user/:idUser",passport.authenticate('jwt',{session:false }), deleteUser);
 
 export default router;
