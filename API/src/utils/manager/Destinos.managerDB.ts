@@ -1,6 +1,14 @@
 import Destino, { IDestino } from "../../models/Destino";
 import User, { IUser } from "../../models/User";
 
+export interface IDestinosManagerDB {
+   getAllDestino(): Promise<IDestino[]>;
+   getById(idDestino: string): Promise<IDestino | Object>;
+   create(userId: string, destino: IDestino): Promise<IDestino | object>;
+   update(userId: string, destino: IDestino): Promise<IDestino | Object>;
+   delete(userId: string, id: string): Promise<IDestino | Object>;
+}
+
 export default class DestinosManagerDB {
    getAllDestino = async (): Promise<IDestino[]> => {
       return await Destino.find();
@@ -29,6 +37,7 @@ export default class DestinosManagerDB {
             throw new Error("User is not a provider completely you profile");
          }
          const newDestino = await Destino.create(destino);
+         newDestino.user = userProvider._id;
          userProvider.touristicDestinations.push(newDestino._id);
          await userProvider.save();
 

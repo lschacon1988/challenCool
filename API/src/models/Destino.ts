@@ -1,4 +1,4 @@
-import { Schema, model, Document } from "mongoose";
+import { Schema, model, Document, ObjectId } from "mongoose";
 
 
 export interface IDestino extends Document {
@@ -6,6 +6,7 @@ export interface IDestino extends Document {
     description: string;
     price: number;
     image: string[];
+    user: ObjectId
     createdAt: Date;
     updatedAt: Date;
 }
@@ -15,6 +16,7 @@ const destinoSchema = new Schema({
     description: { type: String, required: true },
     price: {type: Number, required: true},
     image: { type: Array, required: true },
+    user: { type: Schema.Types.ObjectId, ref: "User" },
 }, { timestamps: true });
 
 
