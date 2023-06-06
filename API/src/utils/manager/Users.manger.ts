@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import config from "../config/config";
 import Profile from "../../models/Profile";
 import { passwordHash } from "../passwordHash";
+import Destino from "../../models/Destino";
 
 
 export interface IUserManager{
@@ -80,10 +81,13 @@ export default class UsersManager implements IUserManager{
       try {
          const userDelete = await User.findByIdAndRemove(idUser);
          await Profile.findOneAndRemove({user:idUser});
-         if (userDelete) {
-            return { msg: "User deleted" };
+         await Destino.deleteMany({user:idUser});
+         
+         if (!userDelete) {
+            throw new Error("User not found");
          }
-         throw new Error("User not found");
+         
+         return { msg: "User deleted" };
       } catch (err) {
          throw err;
       }

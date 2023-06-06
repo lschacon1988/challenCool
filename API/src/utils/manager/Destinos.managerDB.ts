@@ -37,8 +37,9 @@ export default class DestinosManagerDB {
          if (!userProvider?.isProvider) {
             throw new Error("User is not a provider completely you profile");
          }
-         const newDestino = await Destino.create(destino);
+         const newDestino = new Destino(destino);
          newDestino.user = userProvider._id;
+         await newDestino.save();
          userProvider.touristicDestinations.push(newDestino._id);
          await userProvider.save();
 
@@ -79,14 +80,14 @@ export default class DestinosManagerDB {
          }
          if (!userProvider.isProvider) {
             throw new Error("User is not a provider completely you profile");
-
          }
-         console.log(userProvider.touristicDestinations);
-         const idPrueba = idDestino as unknown as ObjectId;
-         const index = userProvider.touristicDestinations.indexOf(idPrueba);
+
+         const idDestinoUser = idDestino as unknown as ObjectId;
+         const index =
+            userProvider.touristicDestinations.indexOf(idDestinoUser);
          userProvider.touristicDestinations.splice(index, 1);
          userProvider.save();
-         console.log(userProvider.touristicDestinations);
+
          const destinoDeleted = await Destino.findByIdAndDelete(idDestino);
          if (!destinoDeleted) {
             throw new Error("Dest not found");
