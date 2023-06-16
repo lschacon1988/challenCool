@@ -5,12 +5,13 @@
    "main": "index.js",
    "type": "module",
    "scripts": {
+      "start": "node src/index.ts",
+      "dev": "nodemon src/index.ts",
       "test": "jest --detectOpenHandles",
-      "dev": "tsc-watch --onSuccess \"node dist/index.js\"",
-      "start": "nodemon src/index.ts",
+      "add-build": "git add dist",
       "build": "rimraf dist && tsc",
       "ts.check": "tsc --project tsconfig.json"
-   },
+      },
    "keywords": [],
    "author": "",
    "license": "ISC",
