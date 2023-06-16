@@ -13,7 +13,7 @@ import destinosRoutes from "./routers/destinos.routes";
 
 const app = express();
 
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 3001);
 
 
 app.use(morgan('dev'));

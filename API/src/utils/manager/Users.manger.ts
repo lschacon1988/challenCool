@@ -85,8 +85,7 @@ export default class UsersManager implements IUserManager{
          
          if (!userDelete) {
             throw new Error("User not found");
-         }
-         
+         }         
          return { msg: "User deleted" };
       } catch (err) {
          throw err;

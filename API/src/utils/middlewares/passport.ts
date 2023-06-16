@@ -12,6 +12,7 @@ const options: StrategyOptions = {
 export default new Strategy(options, async (payload, done) => {
 
     try {
+        console.log(payload);
         const user = await usersManager.getById(payload.id);
         
         if (user) {
