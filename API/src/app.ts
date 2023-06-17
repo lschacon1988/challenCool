@@ -17,7 +17,7 @@ app.set('port', process.env.PORT || 3001);
 
 
 app.use(morgan('dev'));
-app.use(cors())
+app.use(cors({origin: "*"}))
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 app.use(passport.initialize());
